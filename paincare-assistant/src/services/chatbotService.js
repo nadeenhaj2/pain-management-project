@@ -8,9 +8,10 @@ export async function sendChatMessage(message, patientContext = {}) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message,
-        patientContext,
-      }),
+      message,
+      patientContext,
+      chatHistory: messages,
+    }),
     });
 
     const data = await response.json();
