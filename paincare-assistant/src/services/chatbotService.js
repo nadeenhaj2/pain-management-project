@@ -1,6 +1,10 @@
 const API_URL = "https://pain-management-project.onrender.com/api/chatbot";
 
-export async function sendChatMessage(message, patientContext = {}) {
+export async function sendChatMessage(
+  message,
+  patientContext = {},
+  chatHistory = []
+) {
   try {
     const response = await fetch(`${API_URL}/message`, {
       method: "POST",
@@ -8,10 +12,10 @@ export async function sendChatMessage(message, patientContext = {}) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-      message,
-      patientContext,
-      chatHistory: messages,
-    }),
+        message,
+        patientContext,
+        chatHistory,
+      }),
     });
 
     const data = await response.json();

@@ -64,12 +64,17 @@ function PainAssistantChatbot() {
       text: messageText,
     };
 
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+
+    setMessages(updatedMessages);
     setInput("");
     setLoading(true);
 
-    const result = await sendChatMessage(messageText, buildPatientContext());
-
+    const result = await sendChatMessage(
+      messageText,
+      buildPatientContext(),
+      messages
+    );
     const botMessage = {
       sender: "bot",
       text: result.reply,
