@@ -339,6 +339,9 @@ ${message}
 router.post("/message", async (req, res) => {
   try {
     const { message, patientContext } = req.body;
+    console.log("========== CHATBOT ==========");
+    console.log("User message:", message);
+    console.log("Gemini key exists:", !!process.env.GEMINI_API_KEY);
 
     if (!message || !message.trim()) {
       return res.status(400).json({
@@ -358,6 +361,7 @@ router.post("/message", async (req, res) => {
     }
 
     const reply = await callGemini(message, patientContext, painStatistics);
+    console.log("Using Gemini");
 
     res.json({
       success: true,
@@ -365,8 +369,8 @@ router.post("/message", async (req, res) => {
       source: "gemini",
     });
   } catch (error) {
-    console.log("Chatbot error:", error.message);
-
+    console.log("========== GEMINI ERROR ==========");
+    console.log(error);
     try {
       const painStatistics = await buildPainStatistics(req.body.patientContext);
 
