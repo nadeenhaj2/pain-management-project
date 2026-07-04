@@ -271,12 +271,11 @@ Your role:
 - Each line must be one short sentence.
 - Do not write long paragraphs.
 - Do not repeat unnecessary details.
-- Use this exact structure:
-Classification:
-Severity:
-Status:
-Guidance:
-Clinic comparison:
+- Answer according to the user's question.
+- If the user asks for classification, use pain classification details.
+- If the user says hello or asks a general question, respond naturally.
+- Do not always use the same structure.
+- Keep the answer short and helpful.
 - Use simple English.
 - Use this structure:
 Pain classification:
@@ -315,7 +314,7 @@ ${message}
           },
         ],
         generationConfig: {
-          temperature: 0.3,
+          temperature: 0.8,
           maxOutputTokens: 300,
         },
       }),
