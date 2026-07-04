@@ -224,6 +224,23 @@ function shouldClassifyPain(message) {
 function getFallbackResponse(message, patientContext, painStatistics) {
   const text = normalizeText(message);
   const painLevel = Number(patientContext?.latestPainLevel || 0);
+  if (
+  text.includes("hello") ||
+  text.includes("hi") ||
+  text.includes("hey")
+) {
+  return "Hello, I am your PainCare Assistant. How can I help you today?";
+}
+
+if (
+  text.includes("what can you help") ||
+  text.includes("what do you do") ||
+  text.includes("help me with")
+) {
+  return (
+    "I can help classify your latest pain report, explain your pain level, compare it with clinic data, and give safe general guidance."
+  );
+}
 
   if (shouldClassifyPain(message)) {
     return buildClassificationResponse(patientContext, painStatistics);
@@ -248,7 +265,9 @@ function getFallbackResponse(message, patientContext, painStatistics) {
     );
   }
 
-  return buildClassificationResponse(patientContext, painStatistics);
+  return (
+    "I can help you review your latest pain report, classify your pain level, explain your general status, show clinic comparison, and remind you to contact the clinic if the pain is severe."
+  );
 }
 
 async function callGemini(message, patientContext, painStatistics) {
@@ -277,13 +296,11 @@ Your role:
 - Do not always use the same structure.
 - Keep the answer short and helpful.
 - Use simple English.
-- Use this structure:
-Pain classification:
-Severity:
-General status:
-Recommended guidance:
-Comparison with clinic data:
-Important:
+- Answer naturally according to the user's message.
+- If the user asks for classification, give classification details.
+- If the user says hello, greet them briefly.
+- If the user asks what you can do, explain your abilities.
+- Do not use the same structure every time.
 
 Patient context:
 ${JSON.stringify(patientContext || {}, null, 2)}
